@@ -1,0 +1,53 @@
+<?php
+/**
+ * Copyright © Newsletter All rights reserved.
+ * See COPYING.txt for license details.
+ */
+declare(strict_types=1);
+
+namespace Vdcstore\Newsletter\Observer\Email;
+
+class OrderSetTemplateVarsBefore implements \Magento\Framework\Event\ObserverInterface
+{
+    private $checkoutSession;
+
+    private $registry;
+
+    private $fieldFactory;
+
+    private $fieldValueFactory;
+
+    public function __construct(
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Framework\Registry $registry,
+        \Swissup\CheckoutFields\Model\FieldFactory $fieldFactory,
+        \Swissup\CheckoutFields\Model\Field\ValueFactory $fieldValueFactory
+    ) {
+        $this->checkoutSession   = $checkoutSession;
+        $this->registry = $registry;
+        $this->fieldFactory = $fieldFactory;
+        $this->fieldValueFactory = $fieldValueFactory;
+    }
+
+
+    /**
+     * Execute observer
+     *
+     * @param \Magento\Framework\Event\Observer $observer
+     * @return void
+     */
+    public function execute(
+        \Magento\Framework\Event\Observer $observer
+    ) {
+
+        $OrderComment = $this->registry->registry('order_comment');
+        $fieldId = $this->fieldFactory->create()->loadByCode('order_comment')->getId();
+        if($OrderComment){
+        $fieldValueModel = $this->fieldValueFactory->create()->loadByQuoteFieldAndStore($order->getQuoteId(), $fieldId, '1');
+        $fieldValueModel->setValue($OrderComment)->save();
+        $fieldValueModel->setOrderId($order->getId())->save();
+        }
+
+
+    }
+}

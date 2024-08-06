@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Mirasvit_Assistant::assistant" title="AI Assistant" module="Mirasvit_Assistant"
+             sortOrder="50" parent="Magento_Backend::system" resource="Mirasvit_Assistant::assistant"/>
+
+        <add id="Mirasvit_Assistant::assistant_prompt" title="Prompts" module="Mirasvit_Assistant"
+             sortOrder="10" parent="Mirasvit_Assistant::assistant" action="assistant/prompt/index"
+             resource="Mirasvit_Assistant::assistant"/>
+
+        <add id="Mirasvit_Assistant::assistant_rule" title="Automation Rules" module="Mirasvit_Assistant"
+             sortOrder="20" parent="Mirasvit_Assistant::assistant" action="assistant/rule/index"
+             resource="Mirasvit_Assistant::assistant"/>
+
+        <add id="Mirasvit_Assistant::assistant_config" title="Settings" module="Mirasvit_Assistant" sortOrder="35"
+             resource="Mirasvit_Assistant::assistant_config" parent="Mirasvit_Assistant::assistant" action="adminhtml/system_config/edit/section/assistant"/>
+
+    </menu>
+</config>

@@ -1,0 +1,105 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Mirasvit\Assistant\Api\Data\PromptInterface" type="Mirasvit\Assistant\Model\Prompt"/>
+    <preference for="Mirasvit\Assistant\Api\Data\RuleInterface" type="Mirasvit\Assistant\Model\Rule"/>
+    <preference for="Mirasvit\Assistant\Api\Data\HistoryInterface" type="Mirasvit\Assistant\Model\History"/>
+    <preference for="Mirasvit\Assistant\Api\Data\LogInterface" type="Mirasvit\Assistant\Model\Log"/>
+
+    <!--Entity Manager-->
+    <type name="Magento\Framework\EntityManager\MetadataPool">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="Mirasvit\Assistant\Api\Data\PromptInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Mirasvit\Assistant\Api\Data\PromptInterface::TABLE_NAME</item>
+                    <item name="identifierField" xsi:type="const">Mirasvit\Assistant\Api\Data\PromptInterface::ID</item>
+                </item>
+                <item name="Mirasvit\Assistant\Api\Data\RuleInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Mirasvit\Assistant\Api\Data\RuleInterface::TABLE_NAME</item>
+                    <item name="identifierField" xsi:type="const">Mirasvit\Assistant\Api\Data\RuleInterface::ID</item>
+                </item>
+                <item name="Mirasvit\Assistant\Api\Data\HistoryInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Mirasvit\Assistant\Api\Data\HistoryInterface::TABLE_NAME</item>
+                    <item name="identifierField" xsi:type="const">Mirasvit\Assistant\Api\Data\HistoryInterface::ID</item>
+                </item>
+                <item name="Mirasvit\Assistant\Api\Data\LogInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Mirasvit\Assistant\Api\Data\LogInterface::TABLE_NAME</item>
+                    <item name="identifierField" xsi:type="const">Mirasvit\Assistant\Api\Data\LogInterface::ID</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\HydratorPool">
+        <arguments>
+            <argument name="hydrators" xsi:type="array">
+                <item name="Mirasvit\Assistant\Api\Data\PromptInterface" xsi:type="string">Magento\Framework\EntityManager\AbstractModelHydrator</item>
+                <item name="Mirasvit\Assistant\Api\Data\RuleInterface" xsi:type="string">Magento\Framework\EntityManager\AbstractModelHydrator</item>
+                <item name="Mirasvit\Assistant\Api\Data\HistoryInterface" xsi:type="string">Magento\Framework\EntityManager\AbstractModelHydrator</item>
+                <item name="Mirasvit\Assistant\Api\Data\LogInterface" xsi:type="string">Magento\Framework\EntityManager\AbstractModelHydrator</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!--UI-->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="assistant_prompt_listing_data_source" xsi:type="string">Mirasvit\Assistant\Model\ResourceModel\Prompt\Grid</item>
+                <item name="assistant_rule_listing_data_source" xsi:type="string">Mirasvit\Assistant\Model\ResourceModel\Rule\Grid</item>
+                <item name="assistant_rule_log_listing_data_source" xsi:type="string">Mirasvit\Assistant\Model\ResourceModel\Log\Grid</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!--register console commands-->
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="mstAssistantApplyRule" xsi:type="object">Mirasvit\Assistant\Console\Command\ApplyRuleCommand</item>
+                <item name="mstAssistantReindex" xsi:type="object">Mirasvit\Assistant\Console\Command\ReindexCommand</item>
+              </argument>
+        </arguments>
+    </type>
+    <!-- Extra Product Rules -->
+    <type name="Mirasvit\Assistant\Model\Rule\ConditionRule\Condition\Product">
+        <arguments>
+            <argument name="extraRulesPool" xsi:type="array">
+                <item name="qty" xsi:type="object">Mirasvit\Assistant\Model\Rule\ConditionRule\Condition\Product\Qty</item>
+                <item name="created_at" xsi:type="object">Mirasvit\Assistant\Model\Rule\ConditionRule\Condition\Product\CreatedDate</item>
+                <item name="updated_at" xsi:type="object">Mirasvit\Assistant\Model\Rule\ConditionRule\Condition\Product\UpdatedDate</item>
+                <item name="set_as_new" xsi:type="object">Mirasvit\Assistant\Model\Rule\ConditionRule\Condition\Product\SetAsNew</item>
+                <item name="is_salable" xsi:type="object">Mirasvit\Assistant\Model\Rule\ConditionRule\Condition\Product\IsSalable</item>
+                <item name="stock_status" xsi:type="object">Mirasvit\Assistant\Model\Rule\ConditionRule\Condition\Product\StockStatus</item>
+                <item name="price_diff" xsi:type="object">Mirasvit\Assistant\Model\Rule\ConditionRule\Condition\Product\PriceDiff</item>
+                <item name="percent_discount" xsi:type="object">Mirasvit\Assistant\Model\Rule\ConditionRule\Condition\Product\DiscountPercent</item>
+                <item name="attribute_set_id" xsi:type="object">Mirasvit\Assistant\Model\Rule\ConditionRule\Condition\Product\AttributeSetId</item>
+                <item name="category_ids" xsi:type="object">Mirasvit\Assistant\Model\Rule\ConditionRule\Condition\Product\Category</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!--Validator-->
+    <type name="Mirasvit\Core\Api\Service\ValidationServiceInterface">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="mst_assistant" xsi:type="object">Mirasvit\Assistant\Service\ValidationService</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Context -->
+    <type name="Mirasvit\Assistant\Service\ContextMakerService">
+        <arguments>
+            <argument name="makers" xsi:type="array">
+                <item name="store" xsi:type="object">Mirasvit\Assistant\Service\ContextMaker\StoreContext</item>
+                <item name="user" xsi:type="object">Mirasvit\Assistant\Service\ContextMaker\UserContext</item>
+                <item name="product" xsi:type="object">Mirasvit\Assistant\Service\ContextMaker\ProductContext</item>
+                <item name="category" xsi:type="object">Mirasvit\Assistant\Service\ContextMaker\CategoryContext</item>
+                <item name="cms" xsi:type="object">Mirasvit\Assistant\Service\ContextMaker\CmsPageContext</item>
+                <item name="kb_category" xsi:type="object">Mirasvit\Assistant\Service\ContextMaker\KbCategoryContext</item>
+                <item name="kb_article" xsi:type="object">Mirasvit\Assistant\Service\ContextMaker\KbArticleContext</item>
+                <item name="mst_ticket" xsi:type="object">Mirasvit\Assistant\Service\ContextMaker\TicketContext</item>
+                <item name="mst_blog_post" xsi:type="object">Mirasvit\Assistant\Service\ContextMaker\BlogPostContext</item>
+                <item name="magefan_blog_post" xsi:type="object">Mirasvit\Assistant\Service\ContextMaker\Magefan\BlogPostContext</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

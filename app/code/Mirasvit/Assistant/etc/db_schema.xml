@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="mst_assistant_prompt" resource="default" engine="innodb" comment="mst_assistant_prompt">
+        <column xsi:type="int" name="prompt_id" padding="11" unsigned="false" nullable="false" identity="true" comment="criterion_id"/>
+        <column xsi:type="text" name="title" nullable="false" comment="title"/>
+        <column xsi:type="text" name="code" nullable="false" comment="code"/>
+        <column xsi:type="text" name="placeholder" nullable="true" comment="placeholder"/>
+        <column xsi:type="mediumtext" name="prompt" nullable="true" comment="prompt"/>
+        <column xsi:type="text" name="scopes" nullable="true" comment="scopes"/>
+        <column xsi:type="mediumtext" name="field_selector" nullable="true" comment="field selector"/>
+        <column xsi:type="varchar" name="ai_model" nullable="true" length="255" comment="ai_model"/>
+        <column xsi:type="int" name="is_active" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="is_active"/>
+        <column xsi:type="int" name="is_modal" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="is_modal"/>
+        <column xsi:type="int" name="is_convert2html" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="is_convert2html"/>
+        <column xsi:type="int" name="position" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="position"/>
+        <column xsi:type="float" name="frequency_penalty" unsigned="false" nullable="false" default="0" comment="frequency_penalty"/>
+        <column xsi:type="text" name="stop_sequences" nullable="true" comment="stop_sequences"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="prompt_id"/>
+        </constraint>
+    </table>
+
+    <table name="mst_assistant_rule" resource="default" engine="innodb" comment="mst_assistant_rule">
+        <column xsi:type="int" name="rule_id" padding="11" unsigned="false" nullable="false" identity="true" />
+        <column xsi:type="text" name="title" nullable="false" comment="title"/>
+        <column xsi:type="varchar" name="entity" nullable="false" default="product" length="255" comment="entity"/>
+        <column xsi:type="int" name="prompt_id" padding="11" unsigned="false" nullable="true" />
+        <column xsi:type="text" name="field" nullable="true"/>
+        <column xsi:type="int" name="is_active" padding="11" unsigned="false" nullable="false" identity="false" default="0" />
+        <column xsi:type="int" name="is_once" padding="11" unsigned="false" nullable="false" identity="false" default="0" />
+        <column xsi:type="int" name="is_overwrite" padding="11" unsigned="false" nullable="false" identity="false" default="0" />
+        <column xsi:type="text" name="store_ids" nullable="false"/>
+        <column xsi:type="text" name="conditions_serialized" nullable="true" comment="Conditions Serialized"/>
+        <constraint xsi:type="foreign" referenceId="MST_ASSISTANT_RULE_AP_ID"
+                    table="mst_assistant_rule" column="prompt_id" referenceTable="mst_assistant_prompt"
+                    referenceColumn="prompt_id" onDelete="CASCADE" disabled="true"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="rule_id"/>
+        </constraint>
+    </table>
+
+    <table name="mst_assistant_rule_product" resource="default" engine="innodb" comment="mst_assistant_rule_product">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column xsi:type="int" name="rule_id" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Rule Id"/>
+        <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Product Id"/>
+        <column xsi:type="int" name="store_id" padding="10" unsigned="false" nullable="false" identity="false" comment="Store Id"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <index referenceId="MST_ASSISTANT_RULE_RULE_ID_PRODUCT_ID_STORE_ID" indexType="btree">
+            <column name="rule_id"/>
+            <column name="product_id"/>
+            <column name="store_id"/>
+        </index>
+        <index referenceId="MST_ASSISTANT_RULE_PRODUCT_RULE_ID" indexType="btree">
+            <column name="rule_id"/>
+        </index>
+        <index referenceId="MST_ASSISTANT_RULE_PRODUCT_PRODUCT_ID" indexType="btree">
+            <column name="product_id"/>
+        </index>
+    </table>
+
+    <table name="mst_assistant_history" resource="default" engine="innodb">
+        <column xsi:type="int" name="history_id" padding="11" unsigned="false" nullable="false" identity="true" />
+        <column xsi:type="int" name="rule_id" padding="11" unsigned="false" nullable="false" />
+        <column xsi:type="int" name="entity_id" padding="11" unsigned="false" nullable="false" />
+        <column xsi:type="mediumtext" name="old_value" />
+        <column xsi:type="mediumtext" name="new_value" />
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="int" name="is_removed" padding="11" unsigned="false" nullable="false" identity="false" default="0" />
+
+        <constraint xsi:type="foreign" referenceId="MST_ASSISTANT_RULE_AP_ID"
+                    table="mst_assistant_history" column="rule_id" referenceTable="mst_assistant_rule"
+                    referenceColumn="rule_id" onDelete="CASCADE"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="history_id"/>
+        </constraint>
+        <index referenceId="mst_assistant_history_idx" indexType="btree">
+            <column name="rule_id"/>
+            <column name="entity_id"/>
+        </index>
+    </table>
+
+    <table name="mst_assistant_rule_log" resource="default" engine="innodb">
+        <column xsi:type="int" name="log_id" padding="11" unsigned="false" nullable="false" identity="true" />
+        <column xsi:type="int" name="rule_id" padding="11" unsigned="false" nullable="false" />
+        <column xsi:type="varchar" name="identifier" nullable="false" length="255" comment="area"/>
+        <column xsi:type="varchar" name="type" nullable="false" length="255" comment="area"/>
+        <column xsi:type="text" name="message" nullable="true"/>
+        <column xsi:type="text" name="additional_data" nullable="true"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+
+        <constraint xsi:type="foreign" referenceId="MST_ASSISTANT_LOG_AP_ID"
+                    table="mst_assistant_rule_log" column="rule_id" referenceTable="mst_assistant_rule"
+                    referenceColumn="rule_id" onDelete="CASCADE"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="log_id"/>
+        </constraint>
+        <index referenceId="mst_assistant_rule_log_idx" indexType="btree">
+            <column name="rule_id"/>
+        </index>
+    </table>
+</schema>

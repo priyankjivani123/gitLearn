@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/** @var $block \Magento\Swatches\Block\Product\Renderer\Configurable */
+/** @var \Magento\Swatches\ViewModel\Product\Renderer\Configurable $configurableViewModel */
+$_product    = $block->getProduct();
+$configurableViewModel = $block->getConfigurableViewModel()
+?>
+<div class="swatch-opt" data-role="swatch-options"></div>
+ 
+ <?php
+if($_product->getAttributeCode2()){
+ ?>
+<b><p><?= $this->escapeHtml(__('Please indicate the make/model/year of your vehicle')) ?></p></b><input type="text" name="vichel" placeholder="Enter here" required>
+<?php } ?>
+
+<script type="text/x-magento-init">
+    {
+        "[data-role=swatch-options]": {
+            "Magento_Swatches/js/swatch-renderer": {
+                "jsonConfig": <?= /* @noEscape */ $swatchOptions = $block->getJsonConfig() ?>,
+                "jsonSwatchConfig": <?= /* @noEscape */ $swatchOptions = $block->getJsonSwatchConfig() ?>,
+                "mediaCallback": "<?= $block->escapeJs($block->escapeUrl($block->getMediaCallback())) ?>",
+                "gallerySwitchStrategy": "<?= $block->escapeJs($block->getVar('gallery_switch_strategy', 'Magento_ConfigurableProduct')) ?: 'replace'; ?>",
+                "jsonSwatchImageSizeConfig": <?= /* @noEscape */ $block->getJsonSwatchSizeConfig() ?>,
+                "showTooltip": <?= $block->escapeJs($configurableViewModel->getShowSwatchTooltip()) ?>
+            }
+        },
+        "*" : {
+            "Magento_Swatches/js/catalog-add-to-cart": {}
+        }
+    }
+</script>

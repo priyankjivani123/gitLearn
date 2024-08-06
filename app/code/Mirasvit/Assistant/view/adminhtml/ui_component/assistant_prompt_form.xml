@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">assistant_prompt_form.assistant_prompt_form_data_source</item>
+            <item name="deps" xsi:type="string">assistant_prompt_form.assistant_prompt_form_data_source</item>
+        </item>
+
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">assistant_prompt_form</item>
+        </item>
+
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">Mirasvit\Assistant\Ui\Prompt\Form\Control\BackButton</item>
+            <item name="delete" xsi:type="string">Mirasvit\Assistant\Ui\Prompt\Form\Control\DeleteButton</item>
+            <item name="save" xsi:type="string">Mirasvit\Assistant\Ui\Prompt\Form\Control\SaveButton</item>
+            <item name="save_and_continue" xsi:type="string">Mirasvit\Assistant\Ui\Prompt\Form\Control\SaveAndContinueButton</item>
+            <item name="duplicate" xsi:type="string">Mirasvit\Assistant\Ui\Prompt\Form\Control\DuplicateButton</item>
+        </item>
+    </argument>
+
+    <dataSource name="assistant_prompt_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Mirasvit\Assistant\Ui\Prompt\Form\DataProvider</argument>
+            <argument name="name" xsi:type="string">assistant_prompt_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">prompt_id</argument>
+            <argument name="requestFieldName" xsi:type="string">prompt_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="*/*/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string">General Information</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+
+        <field name="prompt_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="is_active">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="label" xsi:type="string" translate="true">Active</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="code"  formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Code</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-code" xsi:type="boolean">true</rule>
+                </validation>
+                <imports>
+                    <link name="disabled">${$.provider}:data.disabled</link>
+                </imports>
+            </settings>
+        </field>
+
+        <field name="title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Title</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="prompt"  formElement="textarea">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="rows" xsi:type="string">10</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Prompt</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <imports>
+                    <link name="disabled">${$.provider}:data.disabled</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="frequency_penalty"  formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Frequency penalty</label>
+                <notice>from 0 to 1 (e.g. 0.3)</notice>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="stop_sequences"  formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Stop Sequences</label>
+                <notice>comma-separated</notice>
+                <imports>
+                    <link name="disabled">${$.provider}:data.disabled</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="scopes">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Mirasvit\Assistant\Model\Config\Source\ScopeSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Scopes</item>
+                    <item name="componentType" xsi:type="string">field</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="elementTmpl" xsi:type="string">ui/grid/filters/elements/ui-select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</item>
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="showCheckbox" xsi:type="boolean">true</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="field_selector"  formElement="textarea">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="rows" xsi:type="string">3</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Field Selectors</label>
+                <notice>One selector per line</notice>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <imports>
+                    <link name="disabled">${$.provider}:data.disabled</link>
+                </imports>
+            </settings>
+        </field>
+
+        <field name="ai_model">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Mirasvit\Assistant\Model\Config\Source\PromptAiModelSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Open AI Model</item>
+                    <item name="componentType" xsi:type="string">field</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="position">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Sort Order</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-digits" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="is_modal">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="label" xsi:type="string" translate="true">Open In Window</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+        </field>
+        <field name="placeholder">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Help Text</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                </item>
+            </argument>
+        </field>
+        <field name="is_convert2html">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="label" xsi:type="string" translate="true">Convert output to HTML</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_cart_product_add_after">
+        <observer name="after_add_to_cart" instance="Priyank\BundleField\Observer\CustomField"/>
+    </event>
+    <event name="sales_order_save_after">
+        <observer name="save_data" instance="Priyank\BundleField\Observer\AfterOrderPlace"/>
+    </event>
+    <event name="controller_action_predispatch_checkout_cart_add">
+        <observer name="before_add_to_cart" instance="Priyank\BundleField\Observer\BeforeAddtocart"/>
+    </event>
+    <event name="email_order_set_template_vars_before">
+        <observer name="before_add_to_cart" instance="Priyank\BundleField\Observer\OrderSender"/>
+    </event>
+</config>

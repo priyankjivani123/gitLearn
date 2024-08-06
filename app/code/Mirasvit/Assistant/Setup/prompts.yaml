@@ -1,0 +1,481 @@
+# product
+- code: mst_product_meta_title
+  title: Meta Title
+  prompt: |
+    Write a meta title on the following product information:
+    {{ global.input }}
+    Product attributes:
+    {{ product.attributes }}
+    Write in the same language as the initial text.
+    Meta Title:
+  scope: product
+  field_selector: |
+    .catalog-product-edit [name="product[meta_title]"]
+  stop_sequences: \n
+  is_active: true
+  placeholder: |
+    - unique selling point
+  is_modal: true
+  position: 10
+- code: mst_product_meta_keywords
+  title: Meta Keywords
+  prompt: |
+    Write a meta keywords on the following product information:
+    {{ global.input }}
+    Product attributes:
+    {{ product.attributes }}
+    Write in the same language as the initial text.
+    Meta Keywords:
+  scope: product
+  field_selector: |
+    .catalog-product-edit textarea[name="product[meta_keyword]"]
+  stop_sequences: \n
+  is_active: true
+  placeholder: |
+    - unique selling point
+  is_modal: true
+  position: 10
+- code: mst_product_meta_description
+  title: Meta Description
+  prompt: |
+    Write a meta description on the following product information:
+    {{ global.input }}
+    Product attributes:
+    {{ product.attributes }}
+    Write in the same language as the initial text.
+    Meta Description:
+  scope: product
+  field_selector: |
+    .catalog-product-edit [name="product[meta_description]"]
+  stop_sequences: \n
+  is_active: true
+  placeholder: |
+    - unique selling point 1
+    - unique selling point 2
+    - unique selling point 3
+  is_modal: true
+  position: 10
+- code: mst_product_short_description
+  title: Short Description
+  prompt: |
+    Write a short marketing product description using the following product information:
+    {{ global.input }}
+    Product attributes:
+    {{ product.attributes }}
+    Write in the same language as the initial text.
+    Short Description:
+  scope: product
+  field_selector: |
+    .catalog-product-edit textarea[name=short_description]
+    .catalog-product-edit textarea[name='product[short_description]']
+  placeholder: |
+    - unique selling point 1
+    - unique selling point 2
+    - unique selling point 3
+  is_modal: true
+  is_convert2html: false
+  is_active: true
+  position: 10
+- code: mst_product_description
+  title: Description
+  prompt: |
+    Write a long marketing product description by the plan:
+      - Introduction (don't print this as a header)
+      - Benefits
+      - Key features
+        - Feature
+        - Feature
+        - Feature
+        - Feature
+        - Feature
+      - Summary
+    Use the following product information:
+    {{ global.input }}
+    Product attributes:
+    {{ product.attributes }}
+    Write in the same language as the initial text.
+    Product Description:
+  scope: product
+  field_selector: |
+    .catalog-product-edit textarea[name=description]
+    .catalog-product-edit textarea[name=html]
+    .catalog-product-edit textarea[name=content]
+    .catalog-product-edit textarea[name='product[description]']
+    .catalog-product-edit textarea[name='product[html]']
+    .catalog-product-edit [data-index="container_description"] .pagebuilder-content-type-wrapper .inline-wysiwyg[contenteditable="true"]
+  is_active: true
+  placeholder: |
+    - unique selling point 1
+    - unique selling point 2
+    - unique selling point 3
+  is_modal: true
+  is_convert2html: true
+  position: 10
+
+# category
+- code: mst_category_meta_title
+  title: Meta Title
+  prompt: |
+    Write a meta title on the following category information:
+    {{ global.input }}
+    category attributes:
+    {{ category.attributes }}
+    Write in the same language as the initial text.
+    Meta Title:
+  scope: category
+  field_selector: |
+    .catalog-category-edit [name="meta_title"]
+  stop_sequences: \n
+  is_active: true
+  placeholder: |
+    - unique selling point
+  is_modal: true
+  position: 10
+- code: mst_category_meta_keywords
+  title: Meta Keywords
+  prompt: |
+    Write a meta keywords on the following category information:
+    {{ global.input }}
+    category attributes:
+    {{ category.attributes }}
+    Write in the same language as the initial text.
+    Meta Keywords:
+  scope: category
+  field_selector: |
+    .catalog-category-edit textarea[name="meta_keywords"]
+  stop_sequences: \n
+  is_active: true
+  placeholder: |
+    - unique selling point
+  is_modal: true
+  position: 10
+- code: mst_category_meta_description
+  title: Meta Description
+  prompt: |
+    Write a meta description on the following category information:
+    {{ global.input }}
+    category attributes:
+    {{ category.attributes }}
+    Write in the same language as the initial text.
+    Meta Description:
+  scope: category
+  field_selector: |
+    .catalog-category-edit [name="meta_description"]
+  stop_sequences: \n
+  is_active: true
+  placeholder: |
+    - unique selling point 1
+    - unique selling point 2
+    - unique selling point 3
+  is_modal: true
+  position: 10
+- code: mst_category_description
+  title: Description
+  prompt: |
+    Write a short marketing category description using the following category information:
+    {{ global.input }}
+    Category attributes:
+    {{ category.attributes }}
+    Write in the same language as the initial text.
+    Short Description:
+  scope: category
+  field_selector: |
+    .catalog-category-edit textarea[name=description]
+    .catalog-category-edit textarea[name=content]
+    .catalog-category-edit textarea[name=html]
+    .catalog-category-edit textarea[name='category[description]']
+    .catalog-category-edit textarea[name='category[html]']
+    .catalog-category-edit [data-index="description"] .pagebuilder-content-type-wrapper .inline-wysiwyg[contenteditable="true"]
+  placeholder: |
+    - unique selling point 1
+    - unique selling point 2
+    - unique selling point 3
+  is_modal: true
+  is_convert2html: false
+  is_active: true
+  position: 10
+
+### HELPDESK
+- code: mst_helpdesk_message
+  title: Message
+  prompt: |
+    Customer Name: {{ ticket.customer }}
+    There is a last message from customer:
+    ```
+    {{ticket.lastMessage}}
+    ```
+    Write an personal message that explain next things:
+    ```
+    {{ global.input }}
+    ```
+    Write in the same language as the initial text:
+  scope: ticket
+  placeholder: |
+    - key point 1
+    - key point 2
+    - key point 3
+  field_selector: |
+    .helpdesk-ticket-edit textarea[id=reply]
+  is_active: true
+  is_modal: true
+  position: 10
+  frequency_penalty: 0.8
+- code: mst_helpdesk_grammar
+  title: Fix Grammar
+  prompt: |
+    Fix grammar in the following message if needed. Keep all original line breaks.
+    ```
+    {{ global.input }}
+    ```
+    Message:
+  scope: ticket
+  field_selector: |
+    .helpdesk-ticket-edit textarea[id=reply]
+  is_active: true
+  position: 10
+- code: mst_helpdesk_friendly
+  title: Friendly
+  prompt: |
+    Make the following message more sociable and friendly:
+    ```
+    {{ global.input }}
+    ```
+    Message:
+  scope: ticket
+  field_selector: |
+    .helpdesk-ticket-edit textarea[id=reply]
+  is_active: true
+  position: 10
+
+### BLOG POST
+- code: mst_blog_post_title
+  title: Title
+  prompt: |
+    There is a blog post:
+    ```
+    {{ post.content }}
+    ```
+    Write a title in the same language as the initial text:
+  scope: post
+  field_selector: |
+    .blog-post-edit [name="name"]
+  stop_sequences: \n
+  is_active: true
+  is_modal: false
+  position: 10
+- code: mst_blog_tweet
+  title: Tweet
+  prompt: |
+    There is a blog post:
+    ```
+    {{ post.title }}
+    {{ post.content }}
+    ```
+    Write a tweet about this post in the same language as the initial text:
+  scope: post
+  field_selector: |
+    .blog-post-edit [name="name"]
+  is_active: true
+  is_modal: true
+  position: 10
+- code: mst_blog_post_meta_title
+  title: Meta Title
+  prompt: |
+    There is a blog post:
+    ```
+    {{ post.title }}
+    {{ post.content }}
+    ```
+    Write a meta title in the same language as the initial text:
+  scope: post
+  field_selector: |
+    .blog-post-edit textarea[name="meta_title"]
+  stop_sequences: \n
+  is_active: true
+  is_modal: false
+  position: 10
+- code: mst_blog_post_meta_keywords
+  title: Meta Keywords
+  prompt: |
+    There is a blog post:
+    ```
+    {{ post.title }}
+    {{ post.content }}
+    ```
+    Write meta keywords in the same language as the initial text:
+  scope: post
+  field_selector: |
+    .blog-post-edit textarea[name="meta_keywords"]
+  stop_sequences: \n
+  is_active: true
+  is_modal: false
+  position: 10
+- code: mst_blog_post_meta_description
+  title: Meta Description
+  prompt: |
+    There is a blog post:
+    ```
+    {{ post.title }}
+    {{ post.content }}
+    ```
+    Write a meta description in the same language as the initial text:
+  scope: post
+  field_selector: |
+    .blog-post-edit textarea[name="meta_description"]
+  is_active: true
+  is_modal: false
+  position: 10
+- code: mst_blog_post_summary
+  title: Summary
+  prompt: |
+    There is a blog post:
+    ```
+    {{ post.title }}
+    {{ post.content }}
+    ```
+    Write a summary in the same language as the initial text:
+  scope: post
+  field_selector: |
+    .blog-post-edit textarea[name="short_content"]
+  is_active: true
+  is_modal: false
+  position: 10
+
+### CMS PAGE
+- code: mst_cms_page_meta_title
+  title: Meta Title
+  prompt: |
+    Write a meta title on the following page information:
+    ```
+    {{ global.input }}
+    ```
+    Page contents:
+    ```
+    {{ page.title }}
+    {{ page.content_heading }}
+    {{ page.content }}
+    ```
+    Write in the same language as the initial text:
+  scope: page
+  field_selector: |
+    .cms-page-edit [name="meta_title"]
+  stop_sequences: \n
+  is_active: true
+  placeholder: |
+    - some informaion
+  is_modal: true
+  position: 10
+- code: mst_cms_page_meta_keywords
+  title: Meta Keywords
+  prompt: |
+    Write meta keywords on the following page information:
+    ```
+    {{ global.input }}
+    ```
+    Page contents:
+    ```
+    {{ page.title }}
+    {{ page.content_heading }}
+    {{ page.content }}
+    ```
+    Write in the same language as the initial text:
+  scope: page
+  field_selector: |
+    .cms-page-edit textarea[name="meta_keywords"]
+  stop_sequences: \n
+  is_active: true
+  placeholder: |
+    - some informaion
+  is_modal: true
+  position: 10
+- code: mst_cms_page_meta_description
+  title: Meta Description
+  prompt: |
+    Write a meta description on the following page information:
+    ```
+    {{ global.input }}
+    ```
+    Page contents:
+    ```
+    {{ page.title }}
+    {{ page.content_heading }}
+    {{ page.content }}
+    ```
+    Write in the same language as the initial text:
+  scope: page
+  field_selector: |
+    .cms-page-edit [name="meta_description"]
+  stop_sequences: \n
+  is_active: true
+  placeholder: |
+    - information 1
+    - information 2
+  is_modal: true
+  position: 10
+- code: mst_cms_page_content_heading
+  title: Heading
+  prompt: |
+    Write a title on the following page information:
+    ```
+    {{ global.input }}
+    ```
+    Page contents:
+    ```
+    {{ page.content_heading }}
+    {{ page.content }}
+    ```
+    Write in the same language as the initial text:
+  scope: page
+  field_selector: |
+    .cms-page-edit [name="content_heading"]
+  stop_sequences: \n
+  placeholder: |
+    - information 1
+    - information 2
+  is_modal: true
+  is_convert2html: false
+  is_active: true
+  position: 10
+
+### newsletter
+- code: mst_newsletter_subject
+  title: Newsletter Subject
+  prompt: |
+    Write an email subject using the following information:
+    ```
+    {{ global.input }}
+    ```
+    Write in the same language as the initial text:
+  scope: email
+  field_selector: |
+    .newsletter-template-edit [name="subject"]
+  stop_sequences: \n
+  placeholder: |
+    - information 1
+    - information 2
+    - information 3
+  is_modal: true
+  is_convert2html: false
+  is_active: true
+  position: 10
+- code: mst_newsletter_content
+  title: Newsletter Content
+  prompt: |
+    Write a long email newsletter using the following information:
+    ```
+    {{ global.input }}
+    ```
+    Add as much text as possible.
+    Write in the same language as the initial text:
+  scope: email
+  field_selector: |
+    .newsletter-template-edit textarea[name="text"]
+  placeholder: |
+    - information 1
+    - information 2
+    - information 3
+  is_modal: true
+  is_convert2html: true
+  is_active: true
+  position: 10
+
