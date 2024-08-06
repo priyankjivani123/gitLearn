@@ -1,0 +1,21 @@
+<?php
+/** @var \Mirasvit\Assistant\Block\Adminhtml\Loader $block */
+
+use Mirasvit\Core\Service\SerializeService;
+
+?>
+    <script>
+        var MST_ASSISTANT_CONFIG = <?= SerializeService::encode($block->getJsConfig()) ?>;
+        require(['uiRegistry'], function (Registry) {
+            window.uiRegistry = Registry
+        })
+    </script>
+
+<?php if ($block->isProduction()): ?>
+    <script src="<?= $block->getViewFileUrl('Mirasvit_Assistant::ui/vendor.min.js') ?>" async></script>
+    <script src="<?= $block->getViewFileUrl('Mirasvit_Assistant::ui/app.min.js') ?>" async></script>
+<?php else: ?>
+    <script src="http://localhost:3005/app.js" async></script>
+    <script src="http://localhost:3005/vendor.js" async></script>
+<?php endif ?>
+

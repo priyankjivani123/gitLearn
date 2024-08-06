@@ -1,0 +1,45 @@
+.mst_assistant_level {
+    width: 18rem;
+}
+
+.mst_assistant_message {
+    width: 50%;
+}
+
+.log_additional {
+    width: 100%;
+
+    td {
+        border: 0.1rem dashed #d6d6d6!important;
+
+        &._key {
+            width: 30%;
+        }
+    }
+}
+
+.assistant__logtype-wrapper {
+    text-align: center;
+
+    .type {
+        display: inline-block;
+        white-space: nowrap;
+        font-size: 11px;
+        border-radius: 2px;
+        padding: 3px 10px;
+        color: #fff;
+        font-weight: bold;
+        text-transform: capitalize;
+        min-width: 10rem;
+
+        &.info {
+            background: #53d056;
+        }
+        &.warning {
+            background: #ffd500;
+        }
+        &.error {
+            background: #ff0101;
+        }
+    }
+}

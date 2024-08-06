@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="mst_assistant_indexer" instance="Mirasvit\Assistant\Service\ApplyRuleService" method="reindexRuleProductRelation">
+            <schedule>10 */6 * * *</schedule>
+        </job>
+    </group>
+</config>

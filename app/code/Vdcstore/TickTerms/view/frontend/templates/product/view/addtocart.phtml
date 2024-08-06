@@ -1,0 +1,94 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php 
+	$_product = $block->getProduct(); 
+	$getTermsTick=$_product->getTermsTick();
+	if($getTermsTick){ 
+?>
+<label class="checkbox "><input type="checkbox" name="terms_tick" id="terms_ick" value="1" class="input-checkbox fpf-input-field" required> This is a professional use only product and you certify you are qualified to use this product. <abbr class="required" title="Required field">*</abbr>&nbsp;<span class="Required">(Required)</span></label>
+<?php } ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()) :?>
+<div class="box-tocart">
+    <div class="fieldset">
+        <?php if ($block->shouldRenderQuantity()) :?>
+        <div class="field qty">
+            <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+            <div class="control">
+                <input type="number"
+                       name="qty"
+                       id="qty"
+                       min="0"
+                       value="<?= $block->getProductDefaultQty() * 1 ?>"
+                       title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                       class="input-text qty"
+                       data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                       />
+            </div>
+        </div>
+        <?php endif; ?>
+        <div class="actions">
+            <button type="submit"
+                    title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                    class="action primary tocart"
+                    id="product-addtocart-button" disabled>
+                <span><?= $block->escapeHtml($buttonTitle) ?></span>
+            </button>
+            <?= $block->getChildHtml('', true) ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>
+
+<!-- <script type="text/javascript">
+                requirejs(['jquery','underscore'], function(jQuery,_){
+                jQuery( ".product-options-wrapper div" ).on("click", function() {
+                selpro();
+                });
+                function selpro () {
+                    var selected_options = {};
+                    var selectedSimpleProductId = '';
+                    var selected_dropdown = '';
+                      jQuery(".product-options-wrapper select[id^='attribute']").last().on('change', function() {
+                        simpleId=jQuery("input[name=selected_configurable_option]").val();
+                        if(simpleId){
+                            selectedSimpleProductId = simpleId;
+
+                        }
+                    });
+                    if(!selectedSimpleProductId){
+                      window.alert(selectedSimpleProductId);
+                    jQuery('div.swatch-attribute').each(function(k,v){
+                        var attribute_id    = jQuery(v).attr('data-attribute-id');
+                        var option_selected = jQuery(v).attr('data-option-selected');
+                        if(!attribute_id || !option_selected){ return;}
+                        selected_options[attribute_id] = option_selected.toString();
+                    });
+                    var product_id_index = jQuery('[data-role=swatch-options]').data('mage-SwatchRenderer').options.jsonConfig.index;
+                    
+                    jQuery.each(product_id_index, function(product_id,attributes){
+                        var productIsSelected = function(attributes, selected_options){
+                            return _.isEqual(attributes, selected_options);
+                        }
+                        if(productIsSelected(attributes, selected_options)){
+                            selectedSimpleProductId = product_id;
+                        } 
+                    });
+                  }
+                 window.alert(selectedSimpleProductId);
+                }
+            }); 
+</script> -->

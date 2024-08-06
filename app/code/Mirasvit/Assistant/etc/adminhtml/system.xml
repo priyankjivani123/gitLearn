@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="assistant" showInDefault="1" showInWebsite="1" showInStore="1" type="text" translate="label" sortOrder="100">
+            <label>AI Assistant</label>
+            <tab>mirasvit</tab>
+            <resource>Mirasvit_Assistant::assistant_config</resource>
+            <group id="general" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10">
+                <label>General Settings</label>
+
+                <field id="openai_key" translate="label"  type="obscure"  sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0" >
+                    <label>OpenAI Secret Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <comment>
+                        <![CDATA[
+                        Generate an <a href="https://platform.openai.com/account/api-keys" target="_blank">OpenAI API key</a>.
+                        You'll need to create an account if you don't have one.
+                        ]]>
+                    </comment>
+                </field>
+
+                <field id="openai_model" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>OpenAI Model</label>
+                    <source_model>\Mirasvit\Assistant\Model\Config\Source\OpenAIModelSource</source_model>
+                </field>
+
+                <field id="logging_enabled" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable logging</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        <![CDATA[
+                        Enable logging for automation rules. When enabled, logs will be available on the rule edit pages
+                        ]]>
+                    </comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

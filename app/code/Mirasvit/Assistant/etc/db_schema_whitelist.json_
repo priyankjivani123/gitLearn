@@ -1,0 +1,59 @@
+{
+    "mst_assistant_prompt": {
+        "column": {
+            "prompt_id": true,
+            "title": true,
+            "code": true,
+            "placeholder": true,
+            "prompt": true,
+            "scopes": true,
+            "field_selector": true,
+            "ai_model": true
+            "is_active": true,
+            "is_modal": true,
+            "is_convert2html": true,
+            "position": true,
+            "frequency_penalty": true,
+            "stop_sequences": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "mst_assistant_rule": {
+        "column": {
+            "rule_id": true,
+            "title": true,
+            "prompt_id": true,
+            "field": true,
+            "is_active": true,
+            "is_once": true,
+            "is_overwrite": true,
+            "store_ids": true,
+            "website_ids": false,
+            "conditions_serialized": true
+        },
+        "constraint": {
+            "MST_ASSISTANT_RULE_PROMPT_ID_MST_ASSISTANT_PROMPT_PROMPT_ID": true,
+            "PRIMARY": true
+        }
+    },
+    "mst_assistant_history": {
+        "column": {
+            "history_id": true,
+            "rule_id": true,
+            "entity_id": true,
+            "old_value": true,
+            "new_value": true,
+            "created_at": true,
+            "is_removed": true
+        },
+        "index": {
+            "MST_ASSISTANT_HISTORY_RULE_ID_ENTITY_ID": true
+        },
+        "constraint": {
+            "MST_ASSISTANT_HISTORY_RULE_ID_MST_ASSISTANT_RULE_RULE_ID": true,
+            "PRIMARY": true
+        }
+    }
+}

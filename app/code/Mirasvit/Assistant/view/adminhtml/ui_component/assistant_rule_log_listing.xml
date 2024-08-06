@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">assistant_rule_log_listing.assistant_rule_log_listing_data_source</item>
+            <item name="deps" xsi:type="string">assistant_rule_log_listing.assistant_rule_log_listing_data_source</item>
+        </item>
+
+        <item name="spinner" xsi:type="string">columns</item>
+    </argument>
+
+    <dataSource name="assistant_rule_log_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Mirasvit\Assistant\Ui\Log\Listing\DataProvider</argument>
+            <argument name="name" xsi:type="string">assistant_rule_log_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">log_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">log_id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+
+    <listingToolbar name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="sticky" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+
+    <columns name="columns" class="Magento\Ui\Component\Listing\Columns">
+        <column name="type">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Level</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="bodyTmpl" xsi:type="string">Mirasvit_Assistant/grid/column/type</item>
+                    <item name="fieldClass" xsi:type="string">mst_assistant_level</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="message">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Message</item>
+                    <item name="fieldClass" xsi:type="string">mst_assistant_message</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="additional_data">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Additional Data</item>
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="created_at">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Logged At</item>
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+                    <item name="timezone" xsi:type="string">false</item>
+                    <item name="dateFormat" xsi:type="string">MMM d, YYYY HH:mm:ss</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>

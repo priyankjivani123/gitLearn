@@ -1,0 +1,1 @@
+<?php if (!$block->getRuleId()) { return; } ?> <div class="messages"><div class="message message-notice notice"><div> To apply this rule please use the following command. You can add it in Cron if necessary.</div><div><br> bin/magento mirasvit:assistant:apply-rule --id <?php echo $block->getRuleId() ?></div></div></div>
